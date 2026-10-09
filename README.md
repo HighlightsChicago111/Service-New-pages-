@@ -35,6 +35,21 @@ Without a project ID in `.env.local`, the site renders from `data/v2-documents.j
 
 `[CONFIRM: question]` in any cell marks a fact Highlights still has to confirm. It shows as a yellow chip, stays out of the FAQ schema, and is listed by `content:build`.
 
+## Deploying on Vercel
+
+1. New project from `HighlightsChicago111/Service-New-pages-`, framework Next.js, root directory `/`. Vercel detects pnpm from `pnpm-lock.yaml`.
+2. Environment variables (Production and Preview):
+   - `NEXT_SANITY_PROJECT_ID` = `hzu8fe77`
+   - `NEXT_SANITY_DATASET` = `production`
+   - `NEXT_SANITY_API_VERSION` = `2026-03-01`
+   - `NEXT_SANITY_STUDIO_URL` = `/services/studio`
+   - `NEXT_SITE_URL` = the deployment URL, e.g. `https://<project>.vercel.app`
+   - `SANITY_API_READ_TOKEN` = the Viewer token (lets the Studio preview drafts)
+   - Do not add `SANITY_API_WRITE_TOKEN` to Vercel; it is only for the local import script.
+   - `SANITY_REVALIDATE_SECRET` later, together with a Sanity webhook to `https://<domain>/services/api/revalidate`.
+3. The site lives under `/services` (the bare domain redirects there). The collection page `/services` lists **published** pages as cards; each card opens its page. Drafts only show in the Studio's preview.
+4. In sanity.io/manage > API > CORS origins, add the Vercel domain (allow credentials) so `/services/studio` can sign in.
+
 ## Checks
 
 `corepack pnpm test:content` (mapping and validation rules), `corepack pnpm typecheck`, `corepack pnpm lint`, `corepack pnpm build`.

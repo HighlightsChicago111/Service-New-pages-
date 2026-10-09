@@ -303,9 +303,5 @@ a{color:var(--brand);text-underline-offset:3px}
 .nx-who.cust{background:#fff4e0;color:#8a4b00}
 .nx-who.mfr{background:#eef0f2;color:#3d4a55}
 .nx-warranty>div{margin:0}
-.v2-index{padding:48px 0 72px}
-.v2-index h1{font-size:clamp(1.8rem,3vw,2.4rem);margin-bottom:8px}
-.v2-index-source{color:#5b6773;margin-bottom:24px}
-.v2-index-list{list-style:none;padding:0;display:grid;gap:12px}
-.v2-index-list a{display:flex;flex-direction:column;gap:2px;padding:16px 18px;border:1px solid #dfe5ea;border-radius:12px;background:#fff;color:#12202b;text-decoration:none}
-.v2-index-list span{color:#5b6773;font-size:.9rem}
+.v2-hero>p:not(.collection-hero-kicker){font-size:18px;line-height:1.65;max-width:690px;margin:28px 0 0}
+@media(max-width:620px){.v2-hero>p:not(.collection-hero-kicker){font-size:16px}}
