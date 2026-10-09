@@ -4,7 +4,7 @@ const IMAGE = `{..., "resolvedUrl": coalesce(image.asset->url, externalUrl)}`
 
 export const V2_ROUTES_QUERY = defineQuery(`
   *[_type == "v2ServicePage" && defined(slug.current)] | order(serviceId asc) {
-    "slug": slug.current, name, parentName, "description": seo.description, "image": coalesce(gallery[0].image.asset->url, gallery[0].externalUrl)
+    "slug": slug.current, name, parentName, "description": seo.description, "image": coalesce(gallery[0].image.asset->url, gallery[0].externalUrl), "imageAlt": gallery[0].alt, "areaName": area->name
   }
 `)
 

@@ -5,7 +5,7 @@ import {client, previewClient} from '@/sanity/lib/client'
 import {V2_PAGE_QUERY, V2_ROUTES_QUERY} from '@/sanity/lib/queries'
 import type {V2Area, V2Page, V2PageData, V2Settings} from '@/types/v2'
 
-export type RouteCard = {slug: string; name: string; parentName?: string; description?: string; image?: string}
+export type RouteCard = {slug: string; name: string; parentName?: string; description?: string; image?: string; imageAlt?: string; areaName?: string}
 
 type LocalDoc = Record<string, unknown> & {_id: string; _type: string}
 type Ref = {_ref?: string}
@@ -32,8 +32,9 @@ function localPage(doc: LocalDoc, docs: LocalDoc[]): {page: V2Page; area: V2Area
   return {page, area}
 }
 
-export async function getRoutes(): Promise<RouteCard[]> {
-  if (contentSource === 'sanity') return (await client.fetch<RouteCard[]>(V2_ROUTES_QUERY)) || []
+/** Published pages; in preview (draft) mode, drafts as well. */
+export async function getRoutes(draft = false): Promise<RouteCard[]> {
+  if (contentSource === 'sanity') return (await (draft ? previewClient : client).fetch<RouteCard[]>(V2_ROUTES_QUERY)) || []
   return (await localDocs())
     .filter((doc) => doc._type === 'v2ServicePage')
     .sort((left, right) => Number(left.serviceId) - Number(right.serviceId))
@@ -43,6 +44,8 @@ export async function getRoutes(): Promise<RouteCard[]> {
       parentName: doc.parentName as string | undefined,
       description: (doc.seo as {description?: string} | undefined)?.description,
       image: (doc.gallery as Array<{externalUrl?: string}> | undefined)?.[0]?.externalUrl,
+      imageAlt: (doc.gallery as Array<{alt?: string}> | undefined)?.[0]?.alt,
+      areaName: 'Chicago',
     }))
 }
 
