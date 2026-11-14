@@ -1,5 +1,4 @@
 import {GoogleG} from '@/components/ds/atoms'
-import {Icon} from '@/components/ds/icon'
 import {initial} from '@/lib/ds'
 import {AreaHead} from './head'
 import {Carousel} from './phone'
@@ -21,8 +20,7 @@ export function ValueBlock({ctx}: {ctx: AreaCtx}) {
 
   return (
     <div className="ds-wrap">
-      <AreaHead id="value-title" eyebrow={`Google reviews · ${total} read`} title="What clients say about value" editorial={editorial}
-        lede={`We don't publish prices, because they depend on the scope. Here is what ${total} of our ${co.googleReviews} Google reviews say instead, counted by what reviewers chose to mention.`} />
+      <AreaHead id="value-title" eyebrow={`Google reviews · ${total} read`} title="What clients say about value" editorial={editorial} />
       {tiles.length > 0 && <>
         <ul className="ar-stats">
           {tiles.map(([value, label]) => (
@@ -33,7 +31,6 @@ export function ValueBlock({ctx}: {ctx: AreaCtx}) {
             </li>
           ))}
         </ul>
-        <p className="ar-footnote"><Icon name="info" size={16} />Counted by keyword matching across the {total} reviews Google returns for Highlights (of {co.googleReviews}), so the numbers are approximate. {stats?.fiveStar ?? 0} of those {total} reviews are five stars.</p>
       </>}
       {Boolean(page.reviews?.length) && <div className="ar-reviews" id="reviews">
         <Carousel rail className="ar-review-grid" headClassName="ar-reviews-head" label="Google reviews"
