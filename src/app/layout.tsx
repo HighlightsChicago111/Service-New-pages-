@@ -5,6 +5,7 @@ import {siteUrl} from '@/sanity/env'
 import './globals.css'
 import './design-system-v3.css'
 import './area-ds.css'
+import '@/components/site-navbar/site-navbar.css'
 
 // Design System v3: two families only, self-hosted (src/app/fonts) so builds never depend on Google Fonts.
 // Inter keeps its optical-size axis so `opsz` can be pinned.

@@ -1,31 +1,21 @@
 /* eslint-disable @next/next/no-img-element -- Small logo files from /public. */
-import Link from 'next/link'
 import {Icon} from './icon'
 import {IconBadge} from './atoms'
 import {FooterQuoteForm} from './footer-quote-form'
-import {COMPANY_EMAIL, LOGO, LOGO_WHITE, OFFICE_HOURS_SHORT} from '@/lib/ds'
+import {SiteNavbar} from '@/components/site-navbar/site-navbar'
+import {COMPANY_EMAIL, LOGO_WHITE, OFFICE_HOURS_SHORT} from '@/lib/ds'
 import {LEGAL_LINKS} from '@/lib/legal-links'
 import {PUBLIC_SITE_ORIGIN} from '@/lib/urls'
 import type {AreaSettings} from '@/types/area'
 
 const SHOP_MAPS_URL = 'https://www.google.com/maps/place/Highlights+Chicago+Electrical+Services/@41.986143,-87.700781,15z'
 
-const NAV = [
-  {label: 'Home', href: `${PUBLIC_SITE_ORIGIN}/`},
-  {label: 'About us', href: `${PUBLIC_SITE_ORIGIN}/about-us`},
-  {label: 'Services', href: `${PUBLIC_SITE_ORIGIN}/services`},
-  {label: 'Service areas', href: '/', internal: true},
-  {label: 'Reviews', href: `${PUBLIC_SITE_ORIGIN}/reviews`},
-  {label: 'Blog', href: `${PUBLIC_SITE_ORIGIN}/blog`},
-  {label: 'Learning center', href: `${PUBLIC_SITE_ORIGIN}/learning-center`},
-]
-
 function addressLine(co: AreaSettings) {
   const address = co.address
   return address ? `${address.street}, ${address.city}, ${address.region} ${address.zip}` : ''
 }
 
-/** Navy utility bar and the white main nav (global blocks). Every page of this app sits under "Service areas". */
+/** Navy utility bar, then the site-wide navbar. Every page of this app sits under "Service areas". */
 export function SiteHeader({co, tel, current = 'areas'}: {co: AreaSettings; tel: string; current?: 'areas' | 'none'}) {
   return (
     <>
@@ -40,28 +30,7 @@ export function SiteHeader({co, tel, current = 'areas'}: {co: AreaSettings; tel:
           <a className="ds-utility-phone" href={tel}><Icon name="phone" size={16} />{co.phoneDisplay}</a>
         </div>
       </div>
-      <header className="ds-nav">
-        <div className="ds-wrap ds-nav-inner">
-          <a className="ds-nav-logo" href={`${PUBLIC_SITE_ORIGIN}/`} aria-label={`${co.name} home`}><img src={LOGO} alt="Highlights Chicago Electrical Services" width={180} height={44} /></a>
-          <nav className="ds-nav-links" aria-label="Primary navigation">
-            {NAV.map((item) => item.internal
-              ? <Link href={item.href} key={item.label} aria-current={current === 'areas' ? 'page' : undefined}>{item.label}</Link>
-              : <a href={item.href} key={item.label}>{item.label}</a>)}
-          </nav>
-          <a className="ds-nav-phone" href={tel}><Icon name="phone" size={18} />{co.phoneDisplay}</a>
-          <a className="ds-btn ds-btn--primary ds-btn--m ds-nav-cta" href={`${PUBLIC_SITE_ORIGIN}/contact-us`}><span>Contact us</span></a>
-          <a className="ds-nav-call" href={tel} aria-label={`Call ${co.phoneDisplay}`}><Icon name="phone" size={20} /></a>
-          <details className="ds-nav-mobile">
-            <summary aria-label="Open navigation menu"><span /><span /><span /></summary>
-            <nav aria-label="Mobile navigation">
-              {NAV.map((item) => item.internal
-                ? <Link href={item.href} key={item.label} aria-current={current === 'areas' ? 'page' : undefined}>{item.label}</Link>
-                : <a href={item.href} key={item.label}>{item.label}</a>)}
-              <a className="ds-btn ds-btn--primary ds-btn--block" href={`${PUBLIC_SITE_ORIGIN}/contact-us`}><span>Contact us</span></a>
-            </nav>
-          </details>
-        </div>
-      </header>
+      <SiteNavbar current={current === 'areas' ? 'service-areas' : undefined} />
     </>
   )
 }
